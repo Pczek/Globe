@@ -34,11 +34,13 @@ class App extends Component {
       .scrollBy(1)
   }
 
-  renderAccounts = (accounts) => (
-    <View>
-      {accounts.map(account => (<Account account={account}/>))}
-    </View>
-  )
+  renderAccounts = (accounts) => (accounts.length > 0
+    ? <View>
+        {accounts.map(account => (<Account account={account}/>))}
+      </View>
+    : <View>
+      <Text>Swipe Left to Add an Ethereum Account</Text>
+    </View>)
 
   render() {
     const {cameraActive} = this.state

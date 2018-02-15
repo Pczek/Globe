@@ -31,9 +31,7 @@ class Scanner extends Component {
                     onPress={() => {
                     onBarCodeRead({data: "0x02F024e0882B310c6734703AB9066EdD3a10C6e0"})
                 }}>
-                    <Text style={{
-                        color: '#ffffff'
-                    }}>{`ready: ${ready}, error: ${error}`}</Text>
+                    <Text>{`ready: ${ready}, error: ${error}`}</Text>
                 </TouchableOpacity>
                 {active
                     ? <RNCamera
@@ -65,8 +63,7 @@ export default Scanner
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center'
+        justifyContent: 'center'
     },
     preview: {
         flex: 1,
