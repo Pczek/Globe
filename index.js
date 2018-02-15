@@ -1,19 +1,21 @@
 // react
 import React from 'react'
-import {AppRegistry, Text, View} from 'react-native'
+import {AppRegistry, View} from 'react-native'
 
 // redux
 import {applyMiddleware, createStore} from 'redux'
-import {Provider} from 'react-redux'
 import logger from 'redux-logger'
+import thunk from 'redux-thunk'
+import {Provider} from 'react-redux'
 import {persistStore, persistCombineReducers} from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // default: localStorage if web, AsyncStorage if react-native
 import {PersistGate} from 'redux-persist/es/integration/react'
 
 // reducers
-import {slide, user} from './src/reducers'
+import {accounts, user, slide} from './src/reducers'
 
 // App
+import {Spinner} from '@shoutem/ui'
 import App from './App'
 
 // Disable annoying debug warnings
@@ -21,12 +23,13 @@ console.disableYellowBox = true
 
 const config = {
     key: 'root',
-    storage
+    storage,
+    blacklist: ['accounts']
 }
-const reducer = persistCombineReducers(config, {slide, user})
+const reducer = persistCombineReducers(config, {accounts, slide, user})
 
 function configureStore() {
-    const store = createStore(reducer, applyMiddleware(logger))
+    const store = createStore(reducer, applyMiddleware(thunk, logger))
     const persistor = persistStore(store)
 
     return {persistor, store}
@@ -39,7 +42,8 @@ const ReduxApp = () => {
         loadingContainer: {
             display: "flex",
             alignItems: "center",
-            justifyContent: 'center'
+            justifyContent: 'center',
+            height: '100%'
         }
     }
     return (
@@ -47,7 +51,7 @@ const ReduxApp = () => {
             <PersistGate
                 loading={(
                 <View style={styles.loadingContainer}>
-                    <Text>Loading ...</Text>
+                    <Spinner/>
                 </View>
             )}
                 persistor={persistor}>

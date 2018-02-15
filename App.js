@@ -1,86 +1,67 @@
 import React, {Component} from 'react'
 import {StyleSheet, View, SafeAreaView} from 'react-native'
-import {Text, Button, TextInput, Heading, Row} from '@shoutem/ui'
-import * as ethers from 'ethers'
+import {connect} from 'react-redux'
 import Swiper from 'react-native-swiper';
+import {Text, Button, TextInput, Heading, Row} from '@shoutem/ui'
+
 import Scanner from './src/components/Scanner'
+import {Account} from './src/components/Account'
+import {addAccount, requestBalance} from './src/actions'
 
-export default class App extends Component {
+class App extends Component {
   state = {
-    address: undefined,
-    balance: 0,
-    provider: null
+    cameraActive: false
   }
 
-  componentDidMount() {
-    const provider = new ethers
-      .providers
-      .InfuraProvider('mainnet', 'tAM9vdqiPLFrZ8F9nzND')
-    this.setState({provider, address: "0x02F024e0882B310c6734703AB9066EdD3a10C6e0"})
-  }
-
-  onAddressChange = (newValue) => {
-    this.setState({address: newValue})
-  }
-
-  lookUpBalance = () => {
-    const {provider, address} = this.state
-    if (provider && address) {
-      provider
-        .getBalance(address)
-        .then((balance) => {
-          // balance is a BigNumber (in wei); format is as a sting (in ether)
-          const etherString = ethers
-            .utils
-            .formatEther(balance);
-          this.setState({
-            balance: ethers
-              .utils
-              .formatEther(balance)
-              .toString()
-          })
-        });
-    }
+  onIndexChanged = (index) => {
+    this.setState({
+      cameraActive: index === 0
+    })
   }
 
   _qrCodeScanned = (qrCode) => {
-    this.setState({
-      address: qrCode.data
-    }, this.lookUpBalance)
+    const address = qrCode.data
+    this
+      .props
+      .addAccount(qrCode.data)
+
+    this
+      .props
+      .requestBalance(address)
+
     this
       .swiper
-      .scrollBy(-1)
+      .scrollBy(1)
   }
 
-  renderBalances = (balance) => (
+  renderAccounts = (accounts) => (
     <View>
-      <Heading>Balance</Heading>
-      <Row>
-        <Text numberOfLines={1}>{`${balance} ETH`}</Text>
-      </Row>
-      <Row>
-        <Text numberOfLines={1}>{`0 MANA`}</Text>
-      </Row>
+      {accounts.map(account => (<Account account={account}/>))}
     </View>
   )
 
   render() {
-    const {balance} = this.state
+    const {cameraActive} = this.state
+    const {accounts} = this.props
     return (
       <SafeAreaView style={styles.appContainer}>
         <Swiper
+          index={1}
           loop={false}
           showsPagination={false}
-          ref={swiper => this.swiper = swiper}>
+          ref={swiper => this.swiper = swiper}
+          onIndexChanged={this.onIndexChanged}>
           {[
-            this.renderBalances(balance),
-            (<Scanner onBarCodeRead={this._qrCodeScanned}/>)
+            (<Scanner active={cameraActive} onBarCodeRead={this._qrCodeScanned}/>), this.renderAccounts(accounts)
           ]}
         </Swiper>
       </SafeAreaView>
     )
   }
 }
+
+const mapStateToProps = (state) => ({accounts: state.accounts})
+export default connect(mapStateToProps, {addAccount, requestBalance})(App)
 
 const styles = StyleSheet.create({
   appContainer: {
