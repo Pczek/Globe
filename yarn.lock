@@ -4318,12 +4318,6 @@ react-native-photo-view@~1.5.0:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-qrcode-scanner@^0.0.30:
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/react-native-qrcode-scanner/-/react-native-qrcode-scanner-0.0.30.tgz#ebe260c9211599438afbd311d1fee973236dac10"
-  dependencies:
-    prop-types "^15.5.10"
-
 react-native-scroller@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/react-native-scroller/-/react-native-scroller-0.0.6.tgz#dea8c89bd1ca2d2445fbb6b3a90960df6c1767ff"
