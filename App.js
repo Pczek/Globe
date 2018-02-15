@@ -5,8 +5,6 @@ import * as ethers from 'ethers'
 import Swiper from 'react-native-swiper';
 import { RNCamera } from 'react-native-camera';
 
-import QRCodeScanner from 'react-native-qrcode-scanner';
-
 export default class App extends Component {
 
   state = {
