@@ -1,0 +1,8 @@
+https://infura.io/setup?key=tAM9vdqiPLFrZ8F9nzND
+
+Mainnet	production network	https://mainnet.infura.io/tAM9vdqiPLFrZ8F9nzND
+Ropsten	test network	https://ropsten.infura.io/tAM9vdqiPLFrZ8F9nzND
+INFURAnet	test network	https://infuranet.infura.io/tAM9vdqiPLFrZ8F9nzND
+Kovan	test network	https://kovan.infura.io/tAM9vdqiPLFrZ8F9nzND
+Rinkeby	test network	https://rinkeby.infura.io/tAM9vdqiPLFrZ8F9nzND
+IPFS	gateway	https://ipfs.infura.io
