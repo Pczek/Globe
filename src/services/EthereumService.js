@@ -1,4 +1,5 @@
 import * as ethers from 'ethers'
+import Axios from 'axios'
 
 class EthereumService {
     constructor() {
@@ -25,6 +26,31 @@ class EthereumService {
             })
         }
         return undefined
+    }
+
+    getTransactions(address) {
+        if (address) {
+            return new Promise((resolve, reject) => {
+                Axios
+                    .get('https://api.etherscan.io/api', {
+                    params: {
+                        module: 'account',
+                        action: 'txlist',
+                        address: address,
+                        startblock: 0,
+                        endblock: 99999999,
+                        sort: 'desc',
+                        apikey: 'P71H6Z4G77XUE26A7KUSWPCR3GY4HPY9ZZ'
+                    }
+                })
+                    .then(response => {
+                        console.log('response', response)
+                        resolve(response.data.result)
+                    })
+            })
+        }
+        return Promise.resolve()
+
     }
 }
 

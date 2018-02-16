@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {StyleSheet, View} from 'react-native'
 import {Text, Caption, Heading, Row, Spinner} from '@shoutem/ui'
 
-export const Account = ({account}) => (
+export const Account = ({address}) => (
     <View>
         <Caption>{account.address}</Caption>
         {account.balances

@@ -24,7 +24,6 @@ class Scanner extends Component {
     render() {
         const {active, onBarCodeRead} = this.props
         const {ready, error} = this.state
-        console.log(`ready: ${ready}, error: ${error}`)
         return (
             <View style={styles.container}>
                 <TouchableOpacity

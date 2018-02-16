@@ -6,7 +6,7 @@ import {Text, Button, TextInput, Heading, Row} from '@shoutem/ui'
 
 import Scanner from './src/components/Scanner'
 import {Account} from './src/components/Account'
-import {addAccount, requestBalance} from './src/actions'
+import {addAndPopulateAccount} from './src/actions'
 
 class App extends Component {
   state = {
@@ -20,14 +20,9 @@ class App extends Component {
   }
 
   _qrCodeScanned = (qrCode) => {
-    const address = qrCode.data
     this
       .props
-      .addAccount(qrCode.data)
-
-    this
-      .props
-      .requestBalance(address)
+      .addAndPopulateAccount(qrCode.data)
 
     this
       .swiper
@@ -63,7 +58,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({accounts: state.accounts})
-export default connect(mapStateToProps, {addAccount, requestBalance})(App)
+export default connect(mapStateToProps, {addAndPopulateAccount})(App)
 
 const styles = StyleSheet.create({
   appContainer: {

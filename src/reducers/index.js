@@ -32,6 +32,7 @@ export const accounts = (state = [], action) => {
             }
             return state
         case 'UPDATE_BALANCES':
+        case 'UPDATE_TRANSACTIONS':
             const accountIndex = state.findIndex(acc => acc.address === action.address)
             
             if (accountIndex !== -1) {
@@ -53,6 +54,11 @@ export const account = (state = {}, action) => {
             return {
                 ...state,
                 balances: action.balances
+            }
+        case 'UPDATE_TRANSACTIONS':
+            return {
+                ...state,
+                transactions: action.transactions
             }
         default:
             return state
