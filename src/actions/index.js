@@ -4,19 +4,12 @@ export const addAccount = (address) => ({type: 'ADD_ACCOUNT', address})
 updateBalances = (address, balances) => ({type: 'UPDATE_BALANCES', address, balances})
 updateTransactions = (address, transactions) => ({type: 'UPDATE_TRANSACTIONS', address, transactions})
 
-export const addAndPopulateAccount = (address) => (dispatch) => {
+export const addAndPopulateAccount = (address) => async(dispatch) => {
     dispatch(addAccount(address))
-    return dispatch(requestBalances(address)).then(dispatch(requestTransactions(address)))
-}
 
-const requestBalances = (address) => (dispatch) => {
-    return EthereumService
-        .lookupBalance(address)
-        .then(balances => dispatch(updateBalances(address, balances)))
-}
+    const balances = await EthereumService.lookupBalance(address)
+    dispatch(updateBalances(address, balances))
 
-const requestTransactions = (address) => (dispatch) => {
-    return EthereumService
-        .getTransactions(address)
-        .then(transactions => dispatch(updateTransactions(address, transactions)))
+    const transactions = await EthereumService.getTransactions(address)
+    dispatch(updateTransactions(address, transactions))
 }
