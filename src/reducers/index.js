@@ -46,7 +46,7 @@ export const accounts = (state = [], action) => {
     }
 }
 
-export const account = (state = {}, action) => {
+const account = (state = {}, action) => {
     switch (action.type) {
         case 'ADD_ACCOUNT':
             return {address: action.address}
