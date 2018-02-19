@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { StyleSheet, View, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 import Swiper from 'react-native-swiper';
-import { Text, Button, TextInput, Heading, Row } from '@shoutem/ui';
-
+import { Caption, Text } from '@shoutem/ui';
 import Scanner from './src/components/Scanner';
-import { Account } from './src/components/Account';
-import { AddressDetailed } from './src/components/AddressDetailed';
-import { addAndPopulateAccount } from './src/actions';
+import AddressDetailed from './src/components/AddressDetailed';
 
 class App extends Component {
+	static defaultProps = {
+		accounts: []
+	};
+
 	state = {
 		cameraActive: false
 	};
@@ -20,19 +21,17 @@ class App extends Component {
 		});
 	};
 
-	_qrCodeScanned = (qrCode) => {
-		this.props.addAndPopulateAccount(qrCode.data);
-
+	_onSave = () => {
 		this.swiper.scrollBy(1);
 	};
 
 	renderAccounts = (accounts) =>
 		accounts.length > 0 ? (
-			<View>
-				<AddressDetailed account={accounts[0]} />
+			<View style={styles.centerThatShit}>
+				{accounts.map((acc) => <Caption styleName="h-center">{acc.address}</Caption>)}
 			</View>
 		) : (
-			<View>
+			<View style={styles.centerThatShit}>
 				<Text>Swipe Left to Add an Ethereum Account</Text>
 			</View>
 		);
@@ -49,10 +48,7 @@ class App extends Component {
 					ref={(swiper) => (this.swiper = swiper)}
 					onIndexChanged={this.onIndexChanged}
 				>
-					{[
-						<Scanner active={cameraActive} onBarCodeRead={this._qrCodeScanned} />,
-						this.renderAccounts(accounts)
-					]}
+					{[ <Scanner active={cameraActive} onSave={this._onSave} />, this.renderAccounts(accounts) ]}
 				</Swiper>
 			</SafeAreaView>
 		);
@@ -62,22 +58,18 @@ class App extends Component {
 const mapStateToProps = (state) => ({
 	accounts: state.accounts
 });
-export default connect(mapStateToProps, {
-	addAndPopulateAccount
-})(App);
+export default connect(mapStateToProps)(App);
 
 const styles = StyleSheet.create({
 	appContainer: {
 		flex: 1,
 		backgroundColor: '#F2F2F2'
 	},
-	container: {
-		flex: 1
-	},
-	textInput: {
-		flex: 2
-	},
-	button: {
-		flex: 1
+	centerThatShit: {
+		height: '100%',
+		width: '100%',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center'
 	}
 });

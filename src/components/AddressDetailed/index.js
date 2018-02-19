@@ -45,10 +45,12 @@ export const AddressDetailed = ({ account }) => {
 
 const styles = StyleSheet.create({
 	container: {
-		height: '100%',
+		flex: 1,
 		width: '100%',
+		// height: '100%',
 		display: 'flex',
-		flexDirection: 'column'
+		flexDirection: 'column',
+		backgroundColor: '#F2F2F2'
 	},
 	top: {
 		flex: 1,
@@ -61,13 +63,13 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
-		width: '90%',
+		width: '100%',
 		height: '50%',
 		backgroundColor: '#ffffff'
 	},
 	bottom: {
-		flex: 2,
-		height: '100%'
+		flex: 2
+		// height: '100%'
 	},
 	inText: {
 		color: '#AFDB8C'
