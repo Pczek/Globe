@@ -44,8 +44,15 @@ class EthereumService {
                     }
                 })
                     .then(response => {
-                        console.log('response', response)
-                        resolve(response.data.result)
+                        let {result} = response.data
+                        result = result.map(tx => ({
+                            ...tx,
+                            value: ethers
+                                .utils
+                                .formatEther(tx.value)
+                                .toString()
+                        }))
+                        resolve(result)
                     })
             })
         }
