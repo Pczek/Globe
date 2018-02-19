@@ -9,7 +9,7 @@ export const AddressDetailed = ({ account }) => {
 	const renderTransaction = (transaction) => (
 		<View>
 			<Row>
-				<Icon name={address === transaction.to ? 'left-arrow' : 'right-arrow'} />
+				<Icon name={address.toLowerCase() === transaction.to.toLowerCase() ? 'left-arrow' : 'right-arrow'} />
 				<View style={{ display: 'flex', flexDirection: 'column' }}>
 					<Subtitle>{`${utils.etherSymbol} ${transaction.value}`}</Subtitle>
 					<Text>{new Date(transaction.timeStamp * 1000).toLocaleString()}</Text>
