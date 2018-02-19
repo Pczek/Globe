@@ -11,7 +11,6 @@
     "axios": "^0.17.1",
     "ethers": "^2.2.6",
     "lodash": "^4.17.5",
-    "node-libs-browser": "^2.1.0",
     "prop-types": "^15.6.0",
     "react": "16.2.0",
     "react-native": "0.53.0",
